@@ -1,0 +1,49 @@
+#!/usr/bin/env node
+
+var fs = require("fs");
+if (!fs.existsSync)
+  fs.existsSync = require("path").existsSync;
+var exec = require("child_process").exec;
+
+var copy = require('dryice').copy; 
+var HOME = __dirname;
+
+function generateParsers(parsers, callback)
+{
+  if(parsers.length > 0)
+	{
+	  var parser = parsers[parsers.length - 1];
+	  var c = function(){
+		  console.log("Build " + parser + "...");
+   	  exec("java -jar antlr-3.3-complete.jar " + HOME + "/xquery/" + parser + ".g  -fo " + HOME + "/build/",
+			     function(err) {
+					   if(err) throw err;
+						 var path   = HOME + "/build/" + parser + ".js";
+						 var source = fs.readFileSync(path);
+						 source = "define(function(require, exports, module){" + source + "\nexports." + parser + " = " + parser + "; });";
+						 source = source.replace("org.antlr.runtime.XQDTParser", "XQDTParser");
+						 fs.writeFileSync(path, source);
+						 callback();
+					 }
+				);
+	  };
+		parsers.splice(parsers.length - 1, 1);
+	  return generateParsers(parsers, c);
+  } else {
+    return callback;
+  }
+}
+
+console.log("Copy runtime files");
+var classes = ["Position", "XQuerySemanticHighlighter", "antlr3-all", "XQDTLexer", "XQDTParser", "xquery"];
+for(var i=0; i < classes.length; i++)
+{
+  copy({ source: HOME + "/xquery/" + classes[i] + ".js", dest: HOME + "/build/" + classes[i] + ".js" });
+}
+
+var parsers = ["XQueryLexer", "StringLexer", "XMLLexer", "XQueryParser"];
+generateParsers(parsers, function(){ console.log("Build done"); })();
+
+
+
+
