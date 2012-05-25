@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
 var fs = require("fs");
-if (!fs.existsSync)
-  fs.existsSync = require("path").existsSync;
 var exec = require("child_process").exec;
 
 var copy = require('dryice').copy; 
