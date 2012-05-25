@@ -1,4 +1,4 @@
-define(function(require, exports, module){// $ANTLR 3.3 Nov 30, 2010 12:50:56 /Users/wcandillon/28msec/xquery.js/xquery/XQueryParser.g 2012-05-25 04:00:16
+define(function(require, exports, module){// $ANTLR 3.3 Nov 30, 2010 12:50:56 /Users/wcandillon/28msec/xquery.js/xquery/XQueryParser.g 2012-05-25 06:43:04
 
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -1201,7 +1201,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
             // AST REWRITE
-            // elements: enc, ver
+            // elements: ver, enc
             // token labels: 
             // rule labels: retval, ver, enc
             // token list labels: 
@@ -1413,7 +1413,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
             // AST REWRITE
-            // elements: p_ModuleDecl, pm_Prolog
+            // elements: pm_Prolog, p_ModuleDecl
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1814,7 +1814,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
             // AST REWRITE
-            // elements: nd, i, s, od, fto, dnd
+            // elements: s, fto, od, dnd, i, nd
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -3922,7 +3922,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
             // AST REWRITE
-            // elements: us, ah, sp
+            // elements: sp, ah, us
             // token labels: 
             // rule labels: retval, sp, us
             // token list labels: 
@@ -4477,7 +4477,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
             // AST REWRITE
-            // elements: nn, us
+            // elements: us, nn
             // token labels: 
             // rule labels: retval, nn, us
             // token list labels: 
@@ -5233,7 +5233,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
             // AST REWRITE
-            // elements: td, qn, vv, vdv
+            // elements: vv, qn, td, vdv
             // token labels: 
             // rule labels: qn, vv, retval, vdv, td
             // token list labels: 
@@ -5847,15 +5847,15 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
             // AST REWRITE
-            // elements: soe, st, pl, qn
+            // elements: pl, qn, soe, st
             // token labels: 
-            // rule labels: qn, soe, retval, pl, st
+            // rule labels: soe, qn, retval, pl, st
             // token list labels: 
             // rule list labels: 
             if ( this.state.backtracking===0 ) {
             retval.tree = root_0;
-            var stream_qn=new org.antlr.runtime.tree.RewriteRuleSubtreeStream(this.adaptor,"token qn",qn!=null?qn.tree:null);
             var stream_soe=new org.antlr.runtime.tree.RewriteRuleSubtreeStream(this.adaptor,"token soe",soe!=null?soe.tree:null);
+            var stream_qn=new org.antlr.runtime.tree.RewriteRuleSubtreeStream(this.adaptor,"token qn",qn!=null?qn.tree:null);
             var stream_retval=new org.antlr.runtime.tree.RewriteRuleSubtreeStream(this.adaptor,"token retval",retval!=null?retval.tree:null);
             var stream_pl=new org.antlr.runtime.tree.RewriteRuleSubtreeStream(this.adaptor,"token pl",pl!=null?pl.tree:null);
             var stream_st=new org.antlr.runtime.tree.RewriteRuleSubtreeStream(this.adaptor,"token st",st!=null?st.tree:null);
@@ -20811,7 +20811,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
                     // AST REWRITE
-                    // elements: l, k, r
+                    // elements: l, r, k
                     // token labels: r, l, k
                     // rule labels: retval
                     // token list labels: 
@@ -21110,7 +21110,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
                     // AST REWRITE
-                    // elements: LPAREN, RPAREN, BINARY
+                    // elements: BINARY, LPAREN, RPAREN
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -21158,7 +21158,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
                     // AST REWRITE
-                    // elements: ITEM, RPAREN, LPAREN
+                    // elements: RPAREN, LPAREN, ITEM
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -24506,7 +24506,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
             // AST REWRITE
-            // elements: nl, nn
+            // elements: nn, nl
             // token labels: 
             // rule labels: retval, nn, nl
             // token list labels: 
@@ -37546,7 +37546,7 @@ org.antlr.lang.extend(XQueryParser.DFA44, org.antlr.runtime.DFA, {
                             var index44_33 = input.index();
                             input.rewind();
                             s = -1;
-                            if ( ((((this.lc(XQS))&&(this.lc(MLS)))||((this.lc(XQS))&&(this.lc(MLS)))||(this.lc(XQS))||((this.lc(XQS))&&(this.lc(MLS)))||((this.lc(XQS))&&(this.lc(MLS))))) ) {s = 67;}
+                            if ( ((((this.lc(XQS))&&(this.lc(MLS)))||(this.lc(XQS))||((this.lc(XQS))&&(this.lc(MLS)))||((this.lc(XQS))&&(this.lc(MLS)))||((this.lc(XQS))&&(this.lc(MLS))))) ) {s = 67;}
 
                             else if ( (true) ) {s = 71;}
 
