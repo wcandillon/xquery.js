@@ -5,10 +5,17 @@ This project compiles the XQuery grammar to JavaScript using antlr.
 
 Dependencies
 -----------
- * Dryice (https://github.com/mozilla/dryice)
+* Required
+    * Dryice (https://github.com/mozilla/dryice)
 
 ```bash
 npm install dryice
+```
+* Optionals (to run tests)
+    * Walk (https://github.com/coolaj86/node-walk)
+    * Require.js (https://github.com/jrburke/requirejs)
+```bash
+npm install walk requirejs
 ```
 
 Build
