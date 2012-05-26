@@ -1,4 +1,4 @@
-define(function(require, exports, module){// $ANTLR 3.3 Nov 30, 2010 12:50:56 /Users/wcandillon/28msec/xquery.js/xquery/XQueryLexer.g 2012-05-25 06:42:55
+define(function(require, exports, module){// $ANTLR 3.3 Nov 30, 2010 12:50:56 /Users/wcandillon/28msec/xquery.js/xquery/XQueryLexer.g 2012-05-26 09:50:21
 
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1

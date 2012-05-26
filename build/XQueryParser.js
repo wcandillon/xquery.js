@@ -1,4 +1,4 @@
-define(function(require, exports, module){// $ANTLR 3.3 Nov 30, 2010 12:50:56 /Users/wcandillon/28msec/xquery.js/xquery/XQueryParser.g 2012-05-25 06:43:04
+define(function(require, exports, module){// $ANTLR 3.3 Nov 30, 2010 12:50:56 /Users/wcandillon/28msec/xquery.js/xquery/XQueryParser.g 2012-05-26 09:50:29
 
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -1201,7 +1201,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
             // AST REWRITE
-            // elements: ver, enc
+            // elements: enc, ver
             // token labels: 
             // rule labels: retval, ver, enc
             // token list labels: 
@@ -1413,7 +1413,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
             // AST REWRITE
-            // elements: pm_Prolog, p_ModuleDecl
+            // elements: p_ModuleDecl, pm_Prolog
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1814,7 +1814,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
             // AST REWRITE
-            // elements: s, fto, od, dnd, i, nd
+            // elements: nd, i, s, od, fto, dnd
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -3922,7 +3922,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
             // AST REWRITE
-            // elements: sp, ah, us
+            // elements: ah, sp, us
             // token labels: 
             // rule labels: retval, sp, us
             // token list labels: 
@@ -5233,7 +5233,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
             // AST REWRITE
-            // elements: vv, qn, td, vdv
+            // elements: vv, vdv, qn, td
             // token labels: 
             // rule labels: qn, vv, retval, vdv, td
             // token list labels: 
@@ -5847,7 +5847,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
             // AST REWRITE
-            // elements: pl, qn, soe, st
+            // elements: st, pl, qn, soe
             // token labels: 
             // rule labels: soe, qn, retval, pl, st
             // token list labels: 
@@ -6124,7 +6124,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
             // AST REWRITE
-            // elements: td, qn
+            // elements: qn, td
             // token labels: 
             // rule labels: qn, retval, td
             // token list labels: 
@@ -20811,7 +20811,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
                     // AST REWRITE
-                    // elements: l, r, k
+                    // elements: l, k, r
                     // token labels: r, l, k
                     // rule labels: retval
                     // token list labels: 
@@ -21110,7 +21110,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
                     // AST REWRITE
-                    // elements: BINARY, LPAREN, RPAREN
+                    // elements: LPAREN, RPAREN, BINARY
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -21158,7 +21158,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
                     // AST REWRITE
-                    // elements: RPAREN, LPAREN, ITEM
+                    // elements: ITEM, RPAREN, LPAREN
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -24506,7 +24506,7 @@ org.antlr.lang.augmentObject(XQueryParser.prototype, {
 
 
             // AST REWRITE
-            // elements: nn, nl
+            // elements: nl, nn
             // token labels: 
             // rule labels: retval, nn, nl
             // token list labels: 
@@ -37546,7 +37546,7 @@ org.antlr.lang.extend(XQueryParser.DFA44, org.antlr.runtime.DFA, {
                             var index44_33 = input.index();
                             input.rewind();
                             s = -1;
-                            if ( ((((this.lc(XQS))&&(this.lc(MLS)))||(this.lc(XQS))||((this.lc(XQS))&&(this.lc(MLS)))||((this.lc(XQS))&&(this.lc(MLS)))||((this.lc(XQS))&&(this.lc(MLS))))) ) {s = 67;}
+                            if ( ((((this.lc(XQS))&&(this.lc(MLS)))||((this.lc(XQS))&&(this.lc(MLS)))||(this.lc(XQS))||((this.lc(XQS))&&(this.lc(MLS)))||((this.lc(XQS))&&(this.lc(MLS))))) ) {s = 67;}
 
                             else if ( (true) ) {s = 71;}
 
@@ -37801,7 +37801,7 @@ org.antlr.lang.extend(XQueryParser.DFA44, org.antlr.runtime.DFA, {
                             var index44_50 = input.index();
                             input.rewind();
                             s = -1;
-                            if ( ((((this.lc(XQS))&&(this.lc(XQU)))||(this.lc(XQS)))) ) {s = 67;}
+                            if ( (((this.lc(XQS))||((this.lc(XQS))&&(this.lc(XQU))))) ) {s = 67;}
 
                             else if ( (true) ) {s = 71;}
 
@@ -37936,7 +37936,7 @@ org.antlr.lang.extend(XQueryParser.DFA44, org.antlr.runtime.DFA, {
                             var index44_59 = input.index();
                             input.rewind();
                             s = -1;
-                            if ( ((((this.lc(XQS))&&(this.lc(XQU)))||(this.lc(XQS)))) ) {s = 67;}
+                            if ( (((this.lc(XQS))||((this.lc(XQS))&&(this.lc(XQU))))) ) {s = 67;}
 
                             else if ( (true) ) {s = 71;}
 
@@ -37951,7 +37951,7 @@ org.antlr.lang.extend(XQueryParser.DFA44, org.antlr.runtime.DFA, {
                             var index44_60 = input.index();
                             input.rewind();
                             s = -1;
-                            if ( ((((this.lc(XQS))&&(this.lc(XQU)))||(this.lc(XQS)))) ) {s = 67;}
+                            if ( (((this.lc(XQS))||((this.lc(XQS))&&(this.lc(XQU))))) ) {s = 67;}
 
                             else if ( (true) ) {s = 71;}
 
@@ -37966,7 +37966,7 @@ org.antlr.lang.extend(XQueryParser.DFA44, org.antlr.runtime.DFA, {
                             var index44_61 = input.index();
                             input.rewind();
                             s = -1;
-                            if ( ((((this.lc(XQS))&&(this.lc(XQU)))||(this.lc(XQS)))) ) {s = 67;}
+                            if ( (((this.lc(XQS))||((this.lc(XQS))&&(this.lc(XQU))))) ) {s = 67;}
 
                             else if ( (true) ) {s = 71;}
 
@@ -37981,7 +37981,7 @@ org.antlr.lang.extend(XQueryParser.DFA44, org.antlr.runtime.DFA, {
                             var index44_62 = input.index();
                             input.rewind();
                             s = -1;
-                            if ( ((((this.lc(XQS))&&(this.lc(XQU)))||(this.lc(XQS)))) ) {s = 67;}
+                            if ( (((this.lc(XQS))||((this.lc(XQS))&&(this.lc(XQU))))) ) {s = 67;}
 
                             else if ( (true) ) {s = 71;}
 
@@ -39064,9 +39064,9 @@ org.antlr.lang.extend(XQueryParser.DFA119, org.antlr.runtime.DFA, {
 
                             else if ( (this.synpred10_XQueryParser()) ) {s = 49;}
 
-                            else if ( (((this.synpred11_XQueryParser()&&(this.lc(MLS)))||this.synpred11_XQueryParser())) ) {s = 47;}
+                            else if ( ((this.synpred11_XQueryParser()||(this.synpred11_XQueryParser()&&(this.lc(MLS))))) ) {s = 47;}
 
-                            else if ( ((this.synpred12_XQueryParser()||(this.synpred12_XQueryParser()&&(this.lc(MLS))))) ) {s = 48;}
+                            else if ( (((this.synpred12_XQueryParser()&&(this.lc(MLS)))||this.synpred12_XQueryParser())) ) {s = 48;}
 
                             else if ( (true) ) {s = 50;}
 
