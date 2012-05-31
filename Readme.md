@@ -25,7 +25,7 @@ To generate the parser, simply run the following command:
 ```bash
 ./Makefile.dryice
 ```
-How to run the test suite?
+Running the test suite
 -----------
 ```bash
 node run_tests.js --keep-going
