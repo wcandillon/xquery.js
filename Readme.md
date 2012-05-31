@@ -25,6 +25,21 @@ To generate the parser, simply run the following command:
 ```bash
 ./Makefile.dryice
 ```
+How to run the test suite?
+-----------
+```bash
+node run_tests.js --keep-going
+```
+
+To parse a particular XQuery file:
+
+```bash
+node run_tests.js -f filename
+```
+For instance:
+```bash
+node run_tests.js -f queries/zorba/boolean/compare0.xq
+```
 
 Who is using this project?
 -----------
