@@ -29,6 +29,7 @@ function parseFile(filename, failOnError)
         type: "error"
       };
       console.log(problem);
+      failures.push(filename);
     }
     return;
   } else if(parser.hasErrors()) {
