@@ -5,7 +5,44 @@ var tree = requirejs('./treehugger/tree');
 
 "use strict";
 
-function convert(ast)
+function getPosition(input, start, stop)
+{
+  var lines = input.split("\n");
+  var i = 0, startline, startcolumn, endline, endcolumn, cursor = 0;
+  for(i in lines)
+  {
+    var line = lines[i];
+    if(startline === undefined && (cursor + line.length) > start && cursor < start)
+    {
+      startline = i;
+      startcolumn = start - cursor;
+    }
+    if(endline === undefined && (cursor + line.length) > stop && cursor < stop)
+    {
+      endline = i;
+      endcolumn = stop - cursor;
+      return {sl: startline, sc: startcolumn, el: endline, ec: endcolumn};
+    }    
+    cursor += line.length;
+  }
+}
+
+function showSource(input, pos)
+{
+  var lines = input.split("\n");
+  var i = 0;
+  console.log(lines[pos.sl].substring(pos.sc));
+  for(i in lines)
+  {
+    if(i > pos.sl && i < pos.el)
+    {
+      console.log(lines[i]);   
+    }
+  }
+  console.log(lines[pos.el].substring(0, pos.ec));
+}
+
+function convert(input, ast)
 {
   if(ast.children !== undefined)
   {
@@ -13,16 +50,32 @@ function convert(ast)
     var child;
     for(child in ast.children)
     {
-      var r = convert(ast.children[child]);
+      var r = convert(input, ast.children[child]);
       if(r !== null) {
         children.push(r);
       }
     }
-    return tree.cons(ast.token.text, children);
+    var node = tree.cons(ast.token.text, children);
+    var pos = getPosition(input, ast.startIndex, ast.stopIndex);
+    console.log(ast.token.text);
+    showSource(input, pos);
+    node.setAnnotation("pos", pos);
+    return node;
   } else if(ast.token.text !== null) {
-    return tree.string(ast.token.text);
+    var node = tree.string(ast.token.text);
+    var pos = getPosition(input, ast.startIndex, ast.stopIndex);
+    console.log(ast.token.text);
+    showSource(input, pos);
+    node.setAnnotation("pos", pos);
+    return node;
   } else if(ast.token.text === null) {
-    return tree.string(ast.token.input.substring(ast.token.start, ast.token.stop));
+    var terminal = ast.token.input.substring(ast.token.start, ast.token.stop);
+    var node = tree.string(terminal);
+    var pos = getPosition(input, ast.startIndex, ast.stopIndex);
+    console.log(terminal);
+    showSource(input, pos);
+    node.setAnnotation("pos", pos);
+    return node;
   } else {
     return null;
   }
@@ -50,7 +103,7 @@ function parseFile(filename)
     }
     return;
   } else {
-    var t = convert(ast.getTree());
+    var t = convert(code, ast.getTree());
     console.log(ast.getTree().toStringTree());
     console.log(t.toString());
   }

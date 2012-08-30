@@ -295,3 +295,12 @@ as xs:string
   return
     $type || ":" || $id || ":" || $endpoint || ":" || $data
 };
+
+declare function s:foo()
+{
+<script type="text/javascript"><![CDATA[
+$(function(){
+    
+});        
+    //]]></script>
+};

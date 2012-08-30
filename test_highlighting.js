@@ -48,7 +48,7 @@ function main(args) {
         }
         output += "<span><br />";
       }
-      output += "</pre>";
+      output += "</pre><hr />";
       if(parser.hasErrors()) {
         var errors = parser.getErrors();
         for(i in errors) {
