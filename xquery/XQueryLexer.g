@@ -327,6 +327,7 @@ SMALLER_SMALLER         : '<<';
 GREATER_GREATER         : '>>';
 SLASH                   : '/';
 SLASH_SLASH             : '//';
+BANG                    : '!';
 DOT                     : '.';
 DOT_DOT                 : '..';
 COLON                   : ':';

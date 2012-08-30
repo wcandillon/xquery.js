@@ -866,8 +866,12 @@ p_UnaryExpr
 //[95]
 p_ValueExpr
         : (VALIDATE ( p_ValidationMode | TYPE )?) => p_ValidateExpr
-        | p_PathExpr
+        | p_SimpleMapExpr
         | p_ExtensionExpr
+        ;
+
+p_SimpleMapExpr
+        : p_PathExpr (BANG p_PathExpr)*
         ;
 
 //[96]
