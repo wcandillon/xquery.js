@@ -415,7 +415,7 @@ p_InheritMode
         
 //[18]
 pm_DecimalFormatDecl
-        : k=DECLARE {this.ak($k);} ((k=DECIMAL_FORMAT {this.ak($k);} p_QName) | (k=DEFAULT {this.ak($k);} k=DECIMAL_FORMAT {this.ak($k);})) (p_DFPropertyName EQUAL p_StringLiteral)* SEMICOLON
+        : k=DECLARE {this.ak($k);} ((k=DECIMAL_FORMAT {this.ak($k);} p_EQName) | (k=DEFAULT {this.ak($k);} k=DECIMAL_FORMAT {this.ak($k);})) (p_DFPropertyName EQUAL p_StringLiteral)* SEMICOLON
         ;
 
 //[19]
@@ -473,12 +473,12 @@ pg_AnnotatedDecl
 
 //[27]
 p_Annotation
-        : ANN_PERCENT p_QName (LPAREN p_Literal (COMMA p_Literal)* RPAREN)?
+        : ANN_PERCENT p_EQName (LPAREN p_Literal (COMMA p_Literal)* RPAREN)?
         ;
 
 //[28]
 p_VarDecl
-        : k=VARIABLE {this.ak($k);} d=DOLLAR qn=p_QName { this.av($d, $qn.stop); } td=p_TypeDeclaration? ((BIND vv=p_VarValue) | (k=EXTERNAL {this.ak($k);} (BIND vdv=p_VarDefaultValue)?))
+        : k=VARIABLE {this.ak($k);} d=DOLLAR qn=p_EQName { this.av($d, $qn.stop); } td=p_TypeDeclaration? ((BIND vv=p_VarValue) | (k=EXTERNAL {this.ak($k);} (BIND vdv=p_VarDefaultValue)?))
                 -> ^(VarDecl $qn ^(VarType $td?) ^(VarValue $vv? ^(VarDefaultValue $vdv?)))
         ;
 
@@ -512,7 +512,7 @@ p_ParamList
         
 //[34]
 p_Param
-        : d=DOLLAR qn=p_QName { this.av($d, $qn.stop); } td=p_TypeDeclaration?
+        : d=DOLLAR qn=p_EQName { this.av($d, $qn.stop); } td=p_TypeDeclaration?
                 -> ^(Param $qn $td?)
         ;
 
@@ -530,7 +530,7 @@ p_EnclosedExpr
 
 //[37]
 pm_OptionDecl
-        : k=DECLARE {this.ak($k);} k=OPTION {this.ak($k);} p_QName p_StringLiteral SEMICOLON
+        : k=DECLARE {this.ak($k);} k=OPTION {this.ak($k);} p_EQName p_StringLiteral SEMICOLON
         ;
 
 //[38]
@@ -663,17 +663,17 @@ p_WindowVars
 
 //[56]
 p_CurrentItem
-        : p_QName
+        : p_EQName
         ;
 
 //[57]
 p_PreviousItem
-        : p_QName
+        : p_EQName
         ;
 
 //[58]
 p_NextItem
-        : p_QName
+        : p_EQName
         ;
 
 //[59]
@@ -732,7 +732,7 @@ p_ReturnHybrid[strict]
 
 //[69]
 p_QuantifiedExpr
-        : (k=SOME | k=EVERY) {this.ak($k);} d=DOLLAR v=p_VarName { this.av($d, $v.stop); } p_TypeDeclaration? k=IN {this.ak($k);} p_ExprSingle[true] (COMMA e=DOLLAR w=p_QName {this.av($e, $w.stop);} p_TypeDeclaration? k=IN {this.ak($k);} p_ExprSingle[true])* k=SATISFIES {this.ak($k);} p_ExprSingle[true]
+        : (k=SOME | k=EVERY) {this.ak($k);} d=DOLLAR v=p_VarName { this.av($d, $v.stop); } p_TypeDeclaration? k=IN {this.ak($k);} p_ExprSingle[true] (COMMA e=DOLLAR w=p_EQName {this.av($e, $w.stop);} p_TypeDeclaration? k=IN {this.ak($k);} p_ExprSingle[true])* k=SATISFIES {this.ak($k);} p_ExprSingle[true]
         ;
 
 //[70]
@@ -929,12 +929,12 @@ p_RelativePathExpr
 p_StepExpr
         : (LBRACKET | LPAREN | SMALLER | QUOT | APOS | DOLLAR) => p_PostfixExpr
         | (
-            ((ELEMENT | ATTRIBUTE) p_QName? LBRACKET) |
+            ((ELEMENT | ATTRIBUTE) p_EQName? LBRACKET) |
             ((NAMESPACE | PROCESSING_INSTRUCTION) p_NCName? LBRACKET) |
             ((DOCUMENT | TEXT | COMMENT) LBRACKET)
           ) => p_PostfixExpr
         | (p_KindTest) => p_AxisStep 
-        | (p_QName LPAREN) => p_PostfixExpr
+        | (p_EQName LPAREN) => p_PostfixExpr
         | (p_PrimaryExpr) => p_PostfixExpr
         | p_AxisStep
         ;
@@ -994,8 +994,8 @@ p_NodeTest
 //[115]
 p_NameTest
         : (p_Wildcard) => p_Wildcard 
-        | (p_NCName COLON) => p_QName
-        | (p_NCName) => p_QName
+        | (p_NCName COLON) => p_EQName
+        | (p_NCName) => p_EQName
         ;
 
 //[116] /* ws: explicit */
@@ -1062,7 +1062,7 @@ p_VarRef
 
 //[125]
 p_VarName
-        : p_QName
+        : p_EQName
         ;
 
 //[126]
@@ -1221,7 +1221,7 @@ pm_CompDocConstructor
         
 //[150]
 pm_CompElemConstructor
-        : k=ELEMENT {this.ak($k);} (p_QName | (LBRACKET p_Expr[true,true] RBRACKET)) LBRACKET pm_ContentExpr RBRACKET
+        : k=ELEMENT {this.ak($k);} (p_EQName | (LBRACKET p_Expr[true,true] RBRACKET)) LBRACKET pm_ContentExpr RBRACKET
         ;
 
 //[151]
@@ -1233,7 +1233,7 @@ pm_ContentExpr
 //[152]
 //[27] new XQuery Scripting proposal
 pm_CompAttrConstructor
-        : k=ATTRIBUTE {this.ak($k);} (p_QName | (LBRACKET p_Expr[true,true] RBRACKET)) LBRACKET p_StatementsAndOptionalExpr RBRACKET
+        : k=ATTRIBUTE {this.ak($k);} (p_EQName | (LBRACKET p_Expr[true,true] RBRACKET)) LBRACKET p_StatementsAndOptionalExpr RBRACKET
         ;
 
 //[153]
@@ -1337,8 +1337,8 @@ p_ItemType
 
 //[168]
 p_AtomicOrUnionType
-        : p_QName
-                -> ^(AtomicOrUnionType p_QName)
+        : p_EQName
+                -> ^(AtomicOrUnionType p_EQName)
         ;
 
 //[169]
@@ -1412,7 +1412,7 @@ p_ElementTest
 
 //[181]
 p_ElementNameOrWildcard
-        : p_QName | STAR ;
+        : p_EQName | STAR ;
 
 //[182]
 p_SchemaElementTest
@@ -1426,17 +1426,17 @@ p_ElementDeclaration
 
 //[184]
 p_AttributeName
-        : p_QName
+        : p_EQName
         ;
 
 //[185]
 p_ElementName
-        : p_QName
+        : p_EQName
         ;
 
 //[186]
 p_TypeName
-        : p_QName
+        : p_EQName
         ;
 
 //[187]
@@ -1546,7 +1546,18 @@ p_AposAttrContentChar
 //[206]
 //L_CharRef
 
+p_EQName
+        : p_QName
+        | p_URIQualifiedName
+        ;
 
+p_URIQualifiedName
+        : p_BracedURILiteral p_NCName
+        ;
+
+p_BracedURILiteral
+        : Q LBRACKET (L_PredefinedEntityRef | L_CharRef | ~(AMP | LBRACKET | RBRACKET))* RBRACKET  
+        ;
 
 //[207] /* xgc: xml-version */
 p_QName 

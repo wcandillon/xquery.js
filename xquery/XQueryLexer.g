@@ -343,6 +343,7 @@ XML_COMMENT_END         : '-->';
 PI_START                : '<?';
 PI_END                  : '?>';
 ATTR_SIGN               : '@';
+Q                       : 'Q';
 CHARREF_DEC             : '&#';
 CHARREF_HEX             : '&#x';
 APOS                    : '\'' { if (!this.inStr) this.inStr = true; };
