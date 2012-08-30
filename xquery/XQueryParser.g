@@ -145,7 +145,6 @@ var Exception = function(){};
 var XQS = true;
 var XQU = true;
 var ZORBA = true;
-var MLS = false;
 
 }
 
@@ -793,7 +792,6 @@ p_CatchClause
 //[81]
 p_CatchErrorList
         : p_NameTest (VBAR p_NameTest)*
-        | {this.lc(MLS)}?=> (/* nothing */)
         ;
 
 //[82]
@@ -1008,10 +1006,7 @@ p_Wildcard @init{this.setWsExplicit(true);}
 
 //[117]
 p_PostfixExpr
-        : p_PrimaryExpr (p_Predicate
-//TODO
-//          | p_ArgumentList
-          )*
+        : p_PrimaryExpr (p_Predicate | p_ArgumentList)*
         ;
 
 //[118]
@@ -1036,13 +1031,12 @@ p_PrimaryExpr
         | p_Literal
         | p_VarRef
         | p_ContextItemExpr
-        | p_FunctionCall
+        | p_FunctionCall //5
         | p_OrderedExpr
         | p_UnorderedExpr
-        | p_Constructor
-//TODO
-//        | p_FunctionItemExpr
+        | p_Constructor //8
         | p_BlockExpr
+        | p_FunctionItemExpr //10
         ;
 
 //[122]
@@ -1210,7 +1204,6 @@ p_ComputedConstructor
         | p_CompTextConstructor
         | pm_CompCommentConstructor
         | pm_CompPIConstructor
-        | {this.lc(MLS)}?=> p_CompBinaryConstructor
         ;
 
 //[149]
@@ -1279,22 +1272,21 @@ pm_CompPIConstructor
         ;
 
 //[160]
-//TODO
-//p_FunctionItemExpr
-//        : p_LiteralFunctionItem | p_InlineFunction
-//        ;
+p_FunctionItemExpr
+        : p_LiteralFunctionItem
+//        | p_InlineFunction
+        ;
 
 //[161] /* xgc: reserved-function-names */
-//TODO
-//p_LiteralFunctionItem
-//        : pg_FQName HASH L_IntegerLiteral
-//        ;
+p_LiteralFunctionItem
+        : p_EQName HASH L_IntegerLiteral
+        ;
 
 //[162]
-//TODO
-//p_InlineFunction
-//        : FUNCTION LPAREN p_ParamList? RPAREN (k=AS {this.ak($k);} p_SequenceType)? p_EnclosedExpr
-//        ;
+p_InlineFunction
+        //: p_Annotation* FUNCTION LPAREN p_ParamList? RPAREN (k=AS {this.ak($k);} p_SequenceType)? pm_FunctionBody
+        : p_Annotation* k=FUNCTION { this.ak($k); } LPAREN p_ParamList? RPAREN (k=AS {this.ak($k);} p_SequenceType)? LBRACKET p_StatementsAndOptionalExpr RBRACKET
+        ;
 
 //[163]
 p_SingleType
@@ -1324,13 +1316,10 @@ p_OccurrenceIndicator
 p_ItemType
         : p_KindTest
                 -> ^(KindTest p_KindTest)
-        | {this.lc(MLS)}?=> (BINARY LPAREN RPAREN)
-                -> ^(BinaryTest BINARY LPAREN RPAREN)
         | (ITEM LPAREN RPAREN)
                 -> ^(ItemTest ITEM LPAREN RPAREN)
-//TODO
-//        | p_FunctionTest
-//                -> ^(FunctionTest p_FunctionTest)
+        | p_FunctionTest
+                -> ^(FunctionTest p_FunctionTest)
         | p_AtomicOrUnionType
         | p_ParenthesizedItemType
         ;

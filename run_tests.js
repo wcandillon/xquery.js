@@ -19,6 +19,7 @@ function parseFile(filename, failOnError)
   parser.highlighter.getTokens();
  if(parser.hasErrors() && !failOnError) {
     var errors = parser.getErrors();
+    failures.push(filename);
     for(i in errors) {
       var error = errors[i];
       console.log(error);
@@ -29,7 +30,6 @@ function parseFile(filename, failOnError)
         type: "error"
       };
       console.log(problem);
-      failures.push(filename);
     }
     return;
   } else if(parser.hasErrors()) {
