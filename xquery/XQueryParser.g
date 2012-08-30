@@ -698,7 +698,11 @@ p_GroupingSpecList
 
 //[63]
 p_GroupingSpec
-        : d=DOLLAR v=p_VarName { this.av($d, $v.stop); } (k=COLLATION {this.ak($k);} p_StringLiteral)?
+        : p_GroupingVariable (p_TypeDeclaration? BIND p_ExprSingle[true])? (k=COLLATION {this.ak($k);} p_StringLiteral)?
+        ;
+
+p_GroupingVariable
+        : d=DOLLAR v=p_VarName { this.av($d, $v.stop); }
         ;
 
 //[64]
