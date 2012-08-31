@@ -94,8 +94,6 @@ QName;
 
 BlockExpr;
 
-// Mark Logic
-BinaryTest;
 }
 
 @parser::header {
@@ -1037,6 +1035,32 @@ p_PrimaryExpr
         | p_Constructor //8
         | p_BlockExpr
         | p_FunctionItemExpr //10
+        //| p_ObjectConstructor
+        | p_ArrayConstructor
+        ;
+
+p_ObjectConstructor
+          : LBRACKET p_JSONPairList RBRACKET
+          ;
+
+p_JSONPairList
+          : p_JSONPair (COMA p_JSONPair)*
+          ;
+
+p_JSONPair
+          : p_ExprSingle[true] SU COLON SU p_ExprSingle[true]
+          ;
+
+//p_ObjectConstructor
+//        : LBRACKET ( p_PairConstructor (COMMA p_PairConstructor)* )? RBRACKET
+//        ;
+//
+//p_PairConstructor
+//        : p_ExprSingle[true] COLON p_ExprSingle[true]
+//        ;
+
+p_ArrayConstructor
+        :  LSQUARE p_Expr[true, true] RSQUARE
         ;
 
 //[122]
@@ -1254,11 +1278,6 @@ p_CompTextConstructor
         : k=TEXT {this.ak($k);} LBRACKET p_Expr[true,true] RBRACKET
         ;
 
-// MarkLogic Server Extension
-p_CompBinaryConstructor
-        : k=BINARY {this.ak($k);} LBRACKET p_Expr[true,true] RBRACKET
-        ;
-
 //[158]
 //[29] new XQuery Scripting proposal
 pm_CompCommentConstructor
@@ -1322,6 +1341,30 @@ p_ItemType
                 -> ^(FunctionTest p_FunctionTest)
         | p_AtomicOrUnionType
         | p_ParenthesizedItemType
+        //| p_JSONTest
+        //| p_StructuredItemTest
+        ;
+
+p_JSONTest
+        : p_JSONItemTest
+        | p_JSONObjectTest
+        | p_JSONArrayTest
+        ;
+
+p_StructuredItemTest
+        : STRUCTURED_ITEM LPAREN RPAREN
+        ;
+
+p_JSONItemTest
+        : JSON_ITEM LPAREN RPAREN
+        ;
+
+p_JSONObjectTest
+        : OBJECT LPAREN RPAREN
+        ;
+
+p_JSONArrayTest
+        : ARRAY LPAREN RPAREN
         ;
 
 //[168]
@@ -1602,14 +1645,13 @@ p_NCName
         | ALLOWING | CATCH | CONTEXT | COUNT | DECIMAL_FORMAT | DECIMAL_SEPARATOR | DIGIT | END | GROUP | GROUPING_SEPARATOR | INFINITY | MINUS_SIGN | NAMESPACE_NODE | NAN | NEXT | ONLY | PATTERN_SEPARATOR | PERCENT | PER_MILLE | PREVIOUS | SLIDING | START | TRY | TUMBLING | TYPE | WHEN | WINDOW | ZERO_DIGIT
         // XQuery Update 1.0 keywords
         | AFTER | BEFORE | COPY | DELETE | FIRST | INSERT | INTO | LAST | MODIFY | NODES | RENAME | REPLACE | REVALIDATION | SKIP | VALUE | WITH
+        | APPEND | JSON | POSITION | STRUCTURED_ITEM | JSON_ITEM | OBJECT | ARRAY
         // XQuery Full Text 1.0 keywords
         | ALL | ANY | CONTAINS | CONTENT | DIACRITICS | DIFFERENT | DISTANCE | ENTIRE | EXACTLY | FROM | FT_OPTION | FTAND | FTNOT | FTOR | INSENSITIVE | LANGUAGE | LEVELS | LOWERCASE | MOST | NO | NOT | OCCURS | PARAGRAPH | PARAGRAPHS | PHRASE | RELATIONSHIP | SAME | SCORE | SENSITIVE | SENTENCE | SENTENCES | STEMMING | STOP | THESAURUS | TIMES | UPPERCASE | USING | WEIGHT | WILDCARDS | WITHOUT | WORD | WORDS
         // new XQuery Scripting proposal keywords
         | BREAK | CONTINUE | EXIT | LOOP | RETURNING | WHILE
         // Zorba DDL keywords
-        | CHECK | COLLECTION | CONSTRAINT | EXPLICITLY | FOREACH | FOREIGN | INDEX | INTEGRITY | KEY | ON | UNIQUE
-        // Mark Logic keywords
-        | BINARY
+        | CHECK | COLLECTION | CONSTRAINT | FOREACH | FOREIGN | INDEX | INTEGRITY | KEY | ON | UNIQUE
         // entity references
         | AMP_ER | APOS_ER | QUOT_ER
         ;
@@ -1621,14 +1663,13 @@ p_FNCName
         | ALLOWING | CATCH | CONTEXT | COUNT | DECIMAL_FORMAT | DECIMAL_SEPARATOR | DIGIT | END | GROUP | GROUPING_SEPARATOR | INFINITY | MINUS_SIGN | NAN | NEXT | ONLY | PATTERN_SEPARATOR | PERCENT | PER_MILLE | PREVIOUS | SLIDING | START | TRY | TUMBLING | TYPE | WHEN | WINDOW | ZERO_DIGIT
         // XQuery Update 1.0 keywords
         | AFTER | BEFORE | COPY | DELETE | FIRST | INSERT | INTO | LAST | MODIFY | NODES | RENAME | REPLACE | REVALIDATION | SKIP | UPDATING | VALUE | WITH
+        | APPEND | JSON | POSITION
         // XQuery Full Text 1.0 keywords
         | ALL | ANY | CONTAINS | CONTENT | DIACRITICS | DIFFERENT | DISTANCE | ENTIRE | EXACTLY | FROM | FT_OPTION | FTAND | FTNOT | FTOR | INSENSITIVE | LANGUAGE | LEVELS | LOWERCASE | MOST | NO | NOT | OCCURS | PARAGRAPH | PARAGRAPHS | PHRASE | RELATIONSHIP | SAME | SCORE | SENSITIVE | SENTENCE | SENTENCES | STEMMING | STOP | THESAURUS | TIMES | UPPERCASE | USING | WEIGHT | WILDCARDS | WITHOUT | WORD | WORDS
         // new XQuery Scripting proposal keywords
         | BREAK | CONTINUE | EXIT | LOOP | RETURNING
         // Zorba DDL keywords
-        | CHECK | COLLECTION | CONSTRAINT | EXPLICITLY | FOREACH | FOREIGN | INDEX | INTEGRITY | KEY | ON | UNIQUE
-        // Mark Logic keywords
-        | BINARY
+        | CHECK | COLLECTION | CONSTRAINT | FOREACH | FOREIGN | INDEX | INTEGRITY | KEY | ON | UNIQUE
         // entity references
         | AMP_ER | APOS_ER | QUOT_ER
         ;
@@ -1657,7 +1698,35 @@ pg_UpdateExpr
         | p_RenameExpr
         | p_ReplaceExpr
         | p_TransformExpr
+       // | p_JSONDeleteExpr
+       // | p_JSONInsertExpr
+       // | p_JSONRenameExpr
+       // | p_JSONReplaceExpr
+       // | p_JSONAppendExpr
         ;
+
+//p_JSONDeleteExpr
+//        : DELETE JSON p_TargetExpr
+//        ;
+//
+//p_JSONInsertExpr
+//        : INSERT JSON (
+//               ( LBRACKET p_PairConstructor (COMA p_PairConstructor) RBRACKET INTO p_ExprSingle[true] )
+//            |  (LSQUARE RSQUARE INTO p_ExprSingle[true] AT POSITION p_ExprSingle[true])
+//          )
+//        ;
+//
+//p_JSONRenameExpr
+//        : RENAME JSON p_TargetExpr (LPAREN p_ExprSingle[true]  RPAREN)+ AS p_ExprSingle[true] 
+//        ;
+//
+//p_JSONReplaceExpr
+//        :  k+=REPLACE k+=JSON k+=VALUE k+=OF p_TargetExpr (LPAREN p_ExprSingle[true] RPAREN)+ k+=WITH p_ExprSingle[true] {this.ak($k);}
+//        ;
+//
+//p_JSONAppendExpr
+//        :  APPEND JSON LSQUARE p_ExprSingle[true] RSQUARE TO p_ExprSingle[true]
+//        ;
 
 //[141]
 pm_RevalidationDecl

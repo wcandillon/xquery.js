@@ -145,6 +145,7 @@ NE                          : 'ne';
 NO_INHERIT                  : 'no-inherit';
 NO_PRESERVE                 : 'no-preserve';
 NODE                        : 'node';
+JSON                        : 'json';
 OF                          : 'of';
 OPTION                      : 'option';
 OR                          : 'or';
@@ -156,6 +157,10 @@ PRECEDING                   : 'preceding';
 PRECEDING_SIBLING           : 'preceding-sibling';
 PRESERVE                    : 'preserve';
 PROCESSING_INSTRUCTION      : 'processing-instruction';
+STRUCTURED_ITEM             : 'structured-item';
+JSON_ITEM                   : 'json-item';
+OBJECT                      : 'object';
+ARRAY                       : 'array';
 RETURN                      : 'return';
 SATISFIES                   : 'satisfies';
 SCHEMA                      : 'schema';
@@ -216,6 +221,8 @@ DELETE                      : 'delete';
 FIRST                       : 'first';
 INSERT                      : 'insert';
 INTO                        : 'into';
+POSITION                    : 'position';
+APPEND                      : 'append';
 LAST                        : 'last';
 MODIFY                      : 'modify';
 NODES                       : 'nodes';
@@ -287,8 +294,6 @@ INTEGRITY                   : 'integrity';
 KEY                         : 'key';
 ON                          : 'on';
 UNIQUE                      : 'unique';
-// MarkLogic
-BINARY                      : 'binary';
 
 // entity references
 AMP_ER  : 'amp';
