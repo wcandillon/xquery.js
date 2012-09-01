@@ -1036,27 +1036,14 @@ p_PrimaryExpr
         | p_Constructor //8
         | p_BlockExpr
         | p_FunctionItemExpr //10
-        //| p_ObjectConstructor
         | p_ArrayConstructor
         ;
 
-p_ObjectConstructor
-          : LBRACKET p_JSONPairList RBRACKET
-          ;
-
-p_JSONPairList
-          : p_JSONPair (COMA p_JSONPair)*
-          ;
-
-p_JSONPair
-          : p_ExprSingle[true] SU COLON SU p_ExprSingle[true]
-          ;
-
 //p_ObjectConstructor
-//        : LBRACKET ( p_PairConstructor (COMMA p_PairConstructor)* )? RBRACKET
+//        : LBRACKET (p_JSONPair (COMMA p_JSONPair)*) RBRACKET
 //        ;
 //
-//p_PairConstructor
+//p_JSONPair
 //        : p_ExprSingle[true] COLON p_ExprSingle[true]
 //        ;
 
