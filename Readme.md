@@ -13,10 +13,9 @@ npm install dryice
 ```
 * Optionals (to run tests)
     * Walk (https://github.com/coolaj86/node-walk)
-    * Require.js (https://github.com/jrburke/requirejs)
 
 ```bash
-npm install walk requirejs
+npm install walk
 ```
 
 Build

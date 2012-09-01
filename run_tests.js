@@ -1,6 +1,6 @@
 var walk = require('walk');
 var fs = require('fs');
-var requirejs = require('requirejs');
+var requirejs = require('./r');
 var xquery = requirejs('./build/xquery');
 
 String.prototype.endsWith = function(suffix) {
