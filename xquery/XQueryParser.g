@@ -989,16 +989,17 @@ p_NodeTest
 
 //[115]
 p_NameTest
-        : (p_Wildcard) => p_Wildcard 
-        | (p_NCName COLON) => p_EQName
-        | (p_NCName) => p_EQName
+        : p_EQName | p_Wildcard
+//        : (p_Wildcard) => p_Wildcard 
+//        | (p_NCName COLON) => p_EQName
+//        | (p_NCName) => p_EQName
         ;
 
 //[116] /* ws: explicit */
 p_Wildcard @init{this.setWsExplicit(true);}
         : STAR (COLON p_NCName)?
         | p_NCName COLON STAR
-        | p_StringLiteral COLON STAR
+        | p_BracedURILiteral STAR
         ;
         finally {this.setWsExplicit(false);}
 
