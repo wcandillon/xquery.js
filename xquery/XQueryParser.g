@@ -1333,8 +1333,8 @@ p_ItemType
                 -> ^(FunctionTest p_FunctionTest)
         | p_AtomicOrUnionType
         | p_ParenthesizedItemType
-        //| p_JSONTest
-        //| p_StructuredItemTest
+        | p_JSONTest
+        | p_StructuredItemTest
         ;
 
 p_JSONTest
@@ -1690,35 +1690,36 @@ pg_UpdateExpr
         | p_RenameExpr
         | p_ReplaceExpr
         | p_TransformExpr
-       // | p_JSONDeleteExpr
-       // | p_JSONInsertExpr
-       // | p_JSONRenameExpr
-       // | p_JSONReplaceExpr
-       // | p_JSONAppendExpr
+        | p_JSONDeleteExpr
+        | p_JSONInsertExpr
+        | p_JSONRenameExpr
+        | p_JSONReplaceExpr
+        | p_JSONAppendExpr
         ;
 
-//p_JSONDeleteExpr
-//        : DELETE JSON p_TargetExpr
-//        ;
-//
-//p_JSONInsertExpr
-//        : INSERT JSON (
+p_JSONDeleteExpr
+        : k+=DELETE k+=JSON {this.ak($k);} p_TargetExpr
+        ;
+
+p_JSONInsertExpr
+        : k+=INSERT k+=JSON p_SourceExpr k+=INTO p_TargetExpr (k+=AT k+=POSITION p_ExprSingle[true])? {this.ak($k);}
+//        (
 //               ( LBRACKET p_PairConstructor (COMA p_PairConstructor) RBRACKET INTO p_ExprSingle[true] )
 //            |  (LSQUARE RSQUARE INTO p_ExprSingle[true] AT POSITION p_ExprSingle[true])
 //          )
-//        ;
-//
-//p_JSONRenameExpr
-//        : RENAME JSON p_TargetExpr (LPAREN p_ExprSingle[true]  RPAREN)+ AS p_ExprSingle[true] 
-//        ;
-//
-//p_JSONReplaceExpr
-//        :  k+=REPLACE k+=JSON k+=VALUE k+=OF p_TargetExpr (LPAREN p_ExprSingle[true] RPAREN)+ k+=WITH p_ExprSingle[true] {this.ak($k);}
-//        ;
-//
-//p_JSONAppendExpr
-//        :  APPEND JSON LSQUARE p_ExprSingle[true] RSQUARE TO p_ExprSingle[true]
-//        ;
+        ;
+
+p_JSONRenameExpr
+        : k+=RENAME k+=JSON p_TargetExpr k+=AS {this.ak($k);} p_ExprSingle[true] 
+        ;
+
+p_JSONReplaceExpr
+        :  k+=REPLACE k+=JSON k+=VALUE k+=OF p_TargetExpr k+=WITH p_ExprSingle[true] {this.ak($k);}
+        ;
+
+p_JSONAppendExpr
+        :  k+=APPEND k+=JSON LSQUARE p_Expr[true, true] RSQUARE k+=TO p_ExprSingle[true] {this.ak($k);}
+        ;
 
 //[141]
 pm_RevalidationDecl
