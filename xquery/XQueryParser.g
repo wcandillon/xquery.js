@@ -1047,6 +1047,10 @@ p_PrimaryExpr
 //        : p_ExprSingle[true] COLON p_ExprSingle[true]
 //        ;
 
+p_PairConstructor
+          : COLON p_ExprSingle[true] (COMMA p_Hybrid[true, false])*
+          ;
+
 p_ArrayConstructor
         :  LSQUARE p_Expr[true, true] RSQUARE
         ;
@@ -2061,11 +2065,20 @@ p_HybridExprSingle[strict, allowConcat]
 catch [re] {
     if(re instanceof org.antlr.runtime.RecognitionException) {
       //console.log("catch4");
-      root_0 = this.adaptor.nil();
-      this.adaptor.addChild(root_0, e.getTree());
-      retval.stop = this.input.LT(-1);
-      retval.tree = this.adaptor.rulePostProcessing(root_0);
-      this.adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+      if(this.input.LT(1).getType() == COLON) {
+        var v = this.p_PairConstructor();
+        root_0 = this.adaptor.nil();
+        this.adaptor.addChild(root_0, v.getTree());
+        retval.stop = this.input.LT(-1);
+        retval.tree = this.adaptor.rulePostProcessing(root_0);
+        this.adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+      } else {
+        root_0 = this.adaptor.nil();
+        this.adaptor.addChild(root_0, e.getTree());
+        retval.stop = this.input.LT(-1);
+        retval.tree = this.adaptor.rulePostProcessing(root_0);
+        this.adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+      }
     } else {
       throw re;
     }
