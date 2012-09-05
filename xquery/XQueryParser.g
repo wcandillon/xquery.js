@@ -1037,7 +1037,17 @@ p_PrimaryExpr
         | p_BlockExpr
         | p_FunctionItemExpr //10
         | p_ArrayConstructor
+        | p_SimpleObjectUnion
+        //| (L_ACC_BRACKET) => p_AccObjectUnion
         ;
+
+p_SimpleObjectUnion
+          : L_UNION_BRACKET p_Expr[true, true]? R_UNION_BRACKET 
+          ;
+
+//p_AccObjectUnion
+//          : L_ACC_BRACKET p_Expr[true, true]? R_ACC_BRACKET 
+//          ;
 
 //p_ObjectConstructor
 //        : LBRACKET (p_JSONPair (COMMA p_JSONPair)*) RBRACKET
