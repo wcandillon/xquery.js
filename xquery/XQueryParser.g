@@ -1062,7 +1062,7 @@ p_PairConstructor
           ;
 
 p_ArrayConstructor
-        :  LSQUARE p_Expr[true, true] RSQUARE
+        :  LSQUARE p_Expr[true, true]? RSQUARE
         ;
 
 //[122]
