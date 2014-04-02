@@ -1,1 +1,1 @@
-This project is deprecated in favor of xqlint [xqlint](https://github.com/wcandillon/xqlint)
+###This project is deprecated in favor of [xqlint](https://github.com/wcandillon/xqlint)
